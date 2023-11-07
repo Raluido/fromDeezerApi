@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/logued', [LoginController::class, 'authenticate'])->name('login.authenticate');
+Route::get('/logued/{url?}', [LoginController::class, 'authenticate'])->name('login.authenticate');
