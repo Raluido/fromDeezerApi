@@ -17,8 +17,15 @@
 
 <script class="" type="module">
     let find = document.getElementById('inputSearch');
+    let results = document.getElementById('results');
     find.addEventListener("keypress", function(event) {
         if (event.key == "Enter") {
+            let children = results.children;
+            if (children) {
+                while (results.firstChild) {
+                    results.removeChild(results.firstChild);
+                }
+            }
             const options = {
                 method: 'GET',
                 url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
@@ -32,10 +39,8 @@
             };
 
             try {
-                const getData = async function() {
+                const getData = async () => {
                     const response = await axios.request(options);
-                    let results = document.getElementById('results');
-                    console.log(response.data.data);
                     if (response.data.data) {
                         for (let index = 0; index < response.data.data.length; index++) {
                             let search = document.createElement('li');
@@ -44,6 +49,7 @@
                         };
                     }
                 }
+                getData();
             } catch (error) {
                 console.error(error);
             }
