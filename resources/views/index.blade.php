@@ -12,6 +12,18 @@
             <ul id="results"></ul>
         </div>
     </div>
+    <input type="hidden" class="" id="token" value="{{ $token }}">
 </section>
 
+<script class="" type="module">
+    let token = document.getElementById('token').value;
+    window.load = function() {
+        axios({
+            method: 'get',
+            url: 'https://api.deezer.com/album/302127',
+        }).then(function(response) {
+            console.log(response)
+        })
+    }
+</script>
 @endsection

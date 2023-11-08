@@ -9,7 +9,7 @@ use Mockery\Undefined;
 
 class LoginController extends Controller
 {
-    function authenticate()
+    function authenticate(Request $request)
     {
         $app_id = "644881";
         $app_secret = "f81c9f6a9ba2783b7dd5d52c6f8e9727";
@@ -19,8 +19,8 @@ class LoginController extends Controller
             $code = $_REQUEST["code"];
         } else {
             $sessionState = md5(uniqid(rand(), TRUE));
-            $session = new Session();
-            $session->set('state', $sessionState);
+            session(['state' => $sessionState]);
+            session()->save();
 
             $dialog_url = "https://connect.deezer.com/oauth/auth.php?app_id=" . $app_id
                 . "&redirect_uri=" . urlencode($app_uri) . "&perms=email,offline_access"
@@ -41,9 +41,12 @@ class LoginController extends Controller
             $api_url   = "https://api.deezer.com/user/me?access_token="
                 . $params['access_token'];
 
+            session(['access_token' => $params['access_token']]);
+            session()->save();
+
             $user = json_decode(file_get_contents($api_url));
 
-            return view('index', ['name' => $user->name]);
+            return view('index', ['name' => $user->name, 'token' => session('access_token')]);
         } else {
             echo ("The state does not match. You may be a victim of CSRF.");
         }
