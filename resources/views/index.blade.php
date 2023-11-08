@@ -17,13 +17,14 @@
 
 <script class="" type="module">
     let token = document.getElementById('token').value;
-    window.load = function() {
+    window.onload = function() {
         axios({
-            method: 'get',
-            url: 'https://api.deezer.com/album/302127',
-        }).then(function(response) {
-            console.log(response)
-        })
+                method: 'get',
+                url: `https://cors-anywhere.herokuapp.com/api.deezer.com/album/302127`,
+            })
+            .then(function(response) {
+                console.log(res.data)
+            })
     }
 </script>
 @endsection
