@@ -21,6 +21,9 @@
         axios({
                 method: 'get',
                 url: `https://cors-anywhere.herokuapp.com/api.deezer.com/album/302127`,
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                },
             })
             .then(function(response) {
                 console.log(res.data)
